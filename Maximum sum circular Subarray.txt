@@ -1,0 +1,29 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        int totalSum = 0;
+        int maxSum = nums[0];
+        int currMax = 0;
+        int minSum = nums[0];
+        int currMin = 0;
+
+        for (int num : nums) {
+            totalSum += num;
+
+            // Standard Kadane's algorithm to find maximum subarray sum
+            currMax = Math.max(num, currMax + num);
+            maxSum = Math.max(maxSum, currMax);
+
+            // Modified Kadane's algorithm to find minimum subarray sum
+            currMin = Math.min(num, currMin + num);
+            minSum = Math.min(minSum, currMin);
+        }
+
+        // If all elements are negative, totalSum - minSum equals 0 (empty subarray).
+        // In this case, returning maxSum handles the non-empty constraint.
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        return Math.max(maxSum, totalSum - minSum);
+    }
+}
