@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class NaivePatternSearch {
+
+    // Function to search for all occurrences of 'pat' in 'txt'
+    public static List<Integer> search(String pat, String txt) {
+        int m = pat.length();
+        int n = txt.length();
+        List<Integer> result = new ArrayList<>();
+
+        // Slide the pattern over text one by one
+        for (int i = 0; i <= n - m; i++) {
+            int j;
+
+            // Check for pattern match at current index i
+            for (j = 0; j < m; j++) {
+                if (txt.charAt(i + j) != pat.charAt(j)) {
+                    break;
+                }
+            }
+
+            // If pattern matches, store the starting index
+            if (j == m) {
+                result.add(i);
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String txt = "aabaacaadaabaaba";
+        String pat = "aaba";
+
+        List<Integer> ans = search(pat, txt);
+
+        // Print starting indices of all matches
+        for (int index : ans) {
+            System.out.print(index + " ");
+        }
+    }
+}
